@@ -36,6 +36,54 @@ For the functions to modify the Bol, following are implemented:
 -GetHash
 -SetOwner
 -GetOwner
--GetRetrieved
+-GetRetrieve
 
 There is also an iterator "GetHashesIterator" and a constructor NewKeeper
+
+The Msgs will induce state transitions. They are wrapped in Txs that clients submit to the network. Msgs must satisfy a specific interface.
+
+_____________________________MESSAGE INTERFACE___________________________________________________________
+
+
+// Transactions messages must fulfill the Msg
+type Msg interface {
+	// Return the message type.
+	// Must be alphanumeric or empty.
+	Type() string
+
+	// Returns a human-readable string for the message, intended for utilization
+	// within tags
+	Route() string
+
+	// ValidateBasic does a simple validation check that
+	// doesn't require access to any other information.
+	ValidateBasic() Error
+
+	// Get the canonical byte representation of the Msg.
+	GetSignBytes() []byte
+
+	// Signers returns the addrs of signers that must sign.
+	// CONTRACT: All signatures must be present to be valid.
+	// CONTRACT: Returns addrs in some deterministic order.
+	GetSigners() []AccAddress
+}
+
+
+____________________________________________________________________________________________________________
+
+The handlers define the action that needs to be taken(action on the stores and what are the conditions) when Msg arrives.
+
+We will have Two messages: CreateBol and TransmitBol.
+
+CreateBol will be used to create the initial Bol and store it on the network and TransmitBol will be used when the bol changes the owner.
+
+In the handler file we have a router that route the message to the proper handler that than execute specfiic actions
+
+
+
+The querrier.go file define the queries the application state users will be able to make. We need two queries:
+1)resolve: takes a hash and return the value of the hash of the document
+2) bol: takes a hash and return the entire metadata of the bol stored in the state : owener, value and retrieve
+
+
+

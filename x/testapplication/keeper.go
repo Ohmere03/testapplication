@@ -88,7 +88,7 @@ func(k Keeper) GetOwner(ctx sdk.Context, hash string) sdk.AccAddress{
 }
 //Get where it is stored
 
-func (k Keeper) GetRetrieved(ctx sdk.Context,hash string) string{
+func (k Keeper) GetRetrieve(ctx sdk.Context,hash string) string{
 	bol := k.GetBol(ctx, hash)
 	retrieve := bol.Retrieve
 	return retrieve
