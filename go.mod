@@ -1,4 +1,4 @@
-module sdk-application-tutorial
+module testapplication
 
 go 1.12
 
