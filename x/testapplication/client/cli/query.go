@@ -47,9 +47,9 @@ func GetCmdBol(queryRoute string, cdc *codec.Codec) *cobra.Command {
 			cliCtx := context.NewCLIContext().WithCodec(cdc)
 			hash := args[0]
 
-			res, err := cliCtx.QueryWithData(fmt.Sprintf("custom/%s/whois/%s", queryRoute, hash), nil)
+			res, err := cliCtx.QueryWithData(fmt.Sprintf("custom/%s/bol/%s", queryRoute, hash), nil)
 			if err != nil {
-				fmt.Printf("could not resolve whois - %s \n", string(hash))
+				fmt.Printf("could not resolve bol - %s \n", string(hash))
 				return nil
 			}
 

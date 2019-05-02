@@ -1,9 +1,6 @@
-module testapplication
-
 go 1.12
 
 require (
-	github.com/Ohmere03/testapplication v0.0.0-20190501132756-c73d0c61bd36
 	github.com/bartekn/go-bip39 v0.0.0-20171116152956-a05967ea095d
 	github.com/beorn7/perks v0.0.0-20180321164747-3a771d992973
 	github.com/bgentry/speakeasy v0.1.0
@@ -12,7 +9,6 @@ require (
 	github.com/cosmos/cosmos-sdk v0.33.0
 	github.com/cosmos/go-bip39 v0.0.0-20180618194314-52158e4697b8
 	github.com/cosmos/ledger-cosmos-go v0.9.8
-	github.com/cosmos/sdk-application-tutorial v0.0.0-20190401171757-ef9c78014e84
 	github.com/davecgh/go-spew v1.1.1
 	github.com/ethereum/go-ethereum v1.8.23
 	github.com/fsnotify/fsnotify v1.4.7
@@ -65,3 +61,5 @@ require (
 )
 
 replace golang.org/x/crypto => github.com/tendermint/crypto v0.0.0-20180820045704-3764759f34a5
+
+module github.com/Ohmere03/testapplication

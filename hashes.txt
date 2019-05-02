@@ -1,0 +1,53 @@
+28F71122D8A1D9272C846F5CBE61F6CDD086F67D4E099379E8CDB1A7B78AFE38
+
+
+
+
+E850CAC5F4E231131482F6941C532089B2000A9DE521ED482AE90E7C0F4E6505
+
+
+u1: importer -> pwd: testtesttest, address: cosmos129kk20x0dvfu2q325lk2cu6gff67p7rqg2uhm6
+u2: exporter ->pwd. testtesttest1, address: cosmos1llt8s53kyedtft2hj4gnyrf98z3zkt94y2m5x4
+
+
+nscli tx testapplication create-bol E850CAC5F4E231131482F6941C532089B2000A9DE521ED482AE90E7C0F4E6505 whereToRetrieve --from importer
+
+
+1 transaction: 
+{
+ "height": "62",
+ "txhash": "5C9B0DE7972D1BDCE5925A44962BAB2A35C186DFDF8EB4469621E5408485F44A",
+ "logs": [
+  {
+   "msg_index": "0",
+   "success": true,
+   "log": ""
+  }
+ ],
+ "gas_wanted": "200000",
+ "gas_used": "14898",
+ "tags": [
+  {
+   "key": "action",
+   "value": "create_bol"
+  }
+ ]
+}
+
+
+nscli query testapplication  resolve  E850CAC5F4E231131482F6941C532089B2000A9DE521ED482AE90E7C0F4E6505
+{
+ "value": "E850CAC5F4E231131482F6941C532089B2000A9DE521ED482AE90E7C0F4E6505"
+}
+
+nscli query testapplication  bol  E850CAC5F4E231131482F6941C532089B2000A9DE521ED482AE90E7C0F4E6505
+
+{
+ "value": "E850CAC5F4E231131482F6941C532089B2000A9DE521ED482AE90E7C0F4E6505",
+ "owner": "cosmos129kk20x0dvfu2q325lk2cu6gff67p7rqg2uhm6",
+ "price": "whereToRetrieve"
+}
+
+
+
+

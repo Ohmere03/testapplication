@@ -84,6 +84,13 @@ func queryBol(ctx sdk.Context, path []string, req abci.RequestQuery, keeper Keep
 	return bz, nil
 }
 
+// Query Result Payload for a resolve query
+type QueryResBol struct {
+	Value string `json:"value"`
+	Owner sdk.AccAddress `json:"owner"`
+	Retrieve string      `json:"price"`
+}
+
 // implement fmt.Stringer
 func (b Bol) String() string {
 	return strings.TrimSpace(fmt.Sprintf(`Owner: %s
