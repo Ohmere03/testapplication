@@ -17,6 +17,7 @@ import (
 
 const (
 	QueryResolve = "resolve" // used to get the value of the hash
+	QueryOwner = "owner" // used to get owner
 	QueryBol = "bol"  // used for to query the entire bill of lading data
 	QueryHashes = "hashes" // used for the interator to get all the hashes
 )
@@ -28,6 +29,8 @@ func NewQuerier(keeper Keeper) sdk.Querier {
 		switch path[0] {
 		case QueryResolve:
 			return queryResolve(ctx, path[1:], req, keeper)
+		/*case QueryOwner:
+			return queryOwner(ctx, path[1:], req, keeper)	*/
 		case QueryBol:
 			return queryBol(ctx, path[1:], req, keeper)
 		case QueryHashes:
@@ -84,18 +87,12 @@ func queryBol(ctx sdk.Context, path []string, req abci.RequestQuery, keeper Keep
 	return bz, nil
 }
 
-// Query Result Payload for a resolve query
-type QueryResBol struct {
-	Value string `json:"value"`
-	Owner sdk.AccAddress `json:"owner"`
-	Retrieve string      `json:"price"`
-}
 
 // implement fmt.Stringer
 func (b Bol) String() string {
 	return strings.TrimSpace(fmt.Sprintf(`Owner: %s
 Value: %s
-Retrieve at: %s`, b.Owner, b.Value, b.Retrieve))
+Retrieve at: %s`, b.Owner, b.Value))
 }
 
 

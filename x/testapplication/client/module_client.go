@@ -1,11 +1,10 @@
 package client
 
 import (
-	"github.com/cosmos/cosmos-sdk/client"
 	testapplicationcmd "github.com/Ohmere03/testapplication/x/testapplication/client/cli"
+	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/spf13/cobra"
-	amino "github.com/tendermint/go-amino"
-
+	"github.com/tendermint/go-amino"
 )
 
 // ModuleClient exports all client functionality from this module
@@ -44,6 +43,7 @@ func (mc ModuleClient) GetTxCmd() *cobra.Command {
 	testapplicationTxCmd.AddCommand(client.PostCommands(
 		testapplicationcmd.GetCmdCreateBol(mc.cdc),
 		testapplicationcmd.GetCmdTransmitBol(mc.cdc),
+		testapplicationcmd.GetCmdSendMoney(mc.cdc),
 	)...)
 
 	return testapplicationTxCmd

@@ -6,51 +6,44 @@ import (
 
 )
 
-// MsgTransmitBol defines a TransmitBol message
-
-type MsgTransmitBoll struct {
+// MsgBuyName defines the BuyName message
+type MsgTransmitBol struct {
 	Hash string
-	Owner sdk.AccAddress
+	Owner  sdk.AccAddress
 	NewOwner sdk.AccAddress
-
 }
 
-// NewMsgTransmitBol is a constructor function for MsgTransmitBol
-
-func NewMsgTransmitBol(hash string, owner sdk.AccAddress, newOwner sdk.AccAddress) MsgTransmitBoll{
-	return MsgTransmitBoll{
-		Hash:hash,
+// NewMsgBuyName is the constructor function for MsgBuyName
+func NewMsgTransmitBol(hash string, owner sdk.AccAddress, newOwner sdk.AccAddress) MsgTransmitBol {
+	return MsgTransmitBol{
+		Hash: hash,
 		Owner:owner,
-		NewOwner: newOwner,
+		NewOwner:newOwner,
 	}
 }
 
-//Implementation of the Msg interface
+// Route should return the name of the module
+func (msg MsgTransmitBol) Route() string { return "testapplication" }
 
+// Type should return the action
+func (msg MsgTransmitBol) Type() string { return "transmit_Bol" }
 
-//Route should return the name of the module
-
-func (msg MsgTransmitBoll) Route() string {return "testapplication"}
-
-
-//Type should return the action
-
-func (msg MsgTransmitBoll) Type() string {return "Transmit_bol"}
-
-//ValidateBasic run stateless checks on the message
-
-func (msg MsgTransmitBoll) ValidateBasic() sdk.Error {
+// ValidateBasic runs stateless checks on the message
+func (msg MsgTransmitBol) ValidateBasic() sdk.Error {
 	if msg.Owner.Empty() {
 		return sdk.ErrInvalidAddress(msg.Owner.String())
 	}
-	if len(msg.Hash) == 0 || len(msg.NewOwner) == 0 {
-		return sdk.ErrUnknownRequest("Hash/new Owner and/or Retrieve address cannot be empty")
+	if msg.NewOwner.Empty() {
+		return sdk.ErrInvalidAddress(msg.Owner.String())
+	}
+	if len(msg.Hash) == 0  {
+		return sdk.ErrUnknownRequest("Hash cannot be empty")
 	}
 	return nil
 }
 
 // GetSignBytes encodes the message for signing
-func (msg MsgTransmitBoll) GetSignBytes() []byte{
+func (msg MsgTransmitBol) GetSignBytes() []byte {
 	b, err := json.Marshal(msg)
 	if err != nil {
 		panic(err)
@@ -59,10 +52,10 @@ func (msg MsgTransmitBoll) GetSignBytes() []byte{
 }
 
 // GetSigners defines whose signature is required
-
-func (msg MsgTransmitBoll) GetSigners() []sdk.AccAddress{
+func (msg MsgTransmitBol) GetSigners() []sdk.AccAddress {
 	return []sdk.AccAddress{msg.Owner}
 }
+
 
 //____________________________________________________________________
 //Message CreateBol
@@ -71,16 +64,14 @@ func (msg MsgTransmitBoll) GetSigners() []sdk.AccAddress{
 type MsgCreateBol struct {
 	Hash string
 	Owner sdk.AccAddress
-	Retrieve string
 
 }
 
 //constructor function for MsgBuyName
-func NewMsgCreateBol(hash string, owner sdk.AccAddress, retrieve string) MsgCreateBol{
+func NewMsgCreateBol(hash string, owner sdk.AccAddress) MsgCreateBol{
 	return MsgCreateBol{
 		Hash:hash,
 		Owner:owner,
-		Retrieve:retrieve,
 	}
 }
 
@@ -101,9 +92,7 @@ func (msg MsgCreateBol) ValidateBasic() sdk.Error{
 	if len(msg.Hash) == 0 {
 		return sdk.ErrUnknownRequest("Hash cannot be empty")
 	}
-	if len(msg.Retrieve) == 0 {
-		return sdk.ErrUnknownRequest("Retrieve indication cannot be empty")
-	}
+
 	return nil
 }
 
@@ -122,3 +111,58 @@ func (msg MsgCreateBol) GetSigners() []sdk.AccAddress {
 }
 
 
+//___________________________________________________________________________________________________
+
+//MessageSendMoney
+
+type MsgSendMoney struct {
+	Destination sdk.AccAddress
+	Amount      sdk.Coins
+	Sender      sdk.AccAddress
+}
+
+func NewMsgSendMoney( destination sdk.AccAddress, amount sdk.Coins, sender sdk.AccAddress) MsgSendMoney{
+	return MsgSendMoney{
+		Destination: destination,
+		Amount:      amount,
+		Sender:      sender,
+	}
+}
+
+//Route should return the name of the module
+func (msg MsgSendMoney) Route() string {return "testapplication"}
+
+//type should return the action
+
+func (msg MsgSendMoney) Type() string {return "sendMoney"}
+
+//ValidateBasic runs stateless checks on the message
+
+func (msg MsgSendMoney) ValidateBasic() sdk.Error{
+	if msg.Sender.Empty(){
+		return sdk.ErrInvalidAddress(msg.Sender.String())
+	}
+	if msg.Destination.Empty(){
+		return sdk.ErrInvalidAddress(msg.Destination.String())
+	}
+	/*if msg.Amount.IsAllPositive(){
+		return  sdk.ErrInsufficientCoins("Amount must be positive")
+
+	}*/
+	return nil
+}
+
+
+// GetSignBytes encodes the message for signing
+func (msg MsgSendMoney) GetSignBytes() []byte {
+	b, err := json.Marshal(msg)
+	if err != nil {
+		panic(err)
+	}
+	return sdk.MustSortJSON(b)
+}
+
+// GetSigners defines whose signature is required
+func (msg MsgSendMoney) GetSigners() []sdk.AccAddress {
+	return []sdk.AccAddress{msg.Sender}
+}

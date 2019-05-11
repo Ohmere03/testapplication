@@ -88,11 +88,6 @@ func(k Keeper) GetOwner(ctx sdk.Context, hash string) sdk.AccAddress{
 }
 //Get where it is stored
 
-func (k Keeper) GetRetrieve(ctx sdk.Context,hash string) string{
-	bol := k.GetBol(ctx, hash)
-	retrieve := bol.Retrieve
-	return retrieve
-}
 // Get an iterator over all hashes in which the keys are the names and the values are the whois
 func (k Keeper) GetHashesIterator(ctx sdk.Context) sdk.Iterator {
 	store := ctx.KVStore(k.storeKey)

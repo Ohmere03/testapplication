@@ -9,16 +9,14 @@ import (
 type Bol struct {
 	Value string 		`json:"value"`
 	Owner sdk.AccAddress `json:"owner"`
-	Retrieve string      `json:"price"`
 }
 
 // create a new Bol with the all the values initialized
 
-func NewBol(address sdk.AccAddress, value string, retrieve string) Bol{
+func NewBol(address sdk.AccAddress, value string) Bol{
 	return Bol{
 		Value: value,
 		Owner:address,
-		Retrieve:retrieve,
 
 	}
 
